@@ -5,6 +5,6 @@ from django.shortcuts import render
 
 def home(request):
    
-    return render(request, "index/templates/index/home.html", {
+    return render(request, "index/home.html", {
    
     })

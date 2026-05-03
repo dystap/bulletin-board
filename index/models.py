@@ -28,6 +28,6 @@ class Topic(models.Model):
 
 class Post(models.Model):
     title = models.CharField()
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, NULL=True, related_name="topicsmade")
-    desciption = 
-
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, NULL=True, related_name="postsmadeuser")
+    desciption = models.CharField()
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, NULL=True, related_name="postmadetopic")    

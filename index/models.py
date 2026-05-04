@@ -8,6 +8,9 @@ def uploaded_pfp(instance: "User", filename):
     filename_mime_type = filename[filename.rfind("."):]
     return f"User/{instance.id}/{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}{filename_mime_type}"
 
+def uploaded_image(instance: "Post", filename):
+    filename_mime_type = filename[filename.rfind("."):]
+    return f"Post/{instance.id}/{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
 
 class User(models.Model):
     email = models.EmailField()
@@ -17,17 +20,58 @@ class User(models.Model):
     quote = models.TextField(blank=True, null=True)
     pfp = models.FileField(
         upload_to=uploaded_pfp,
-        validators=[FileExtensionValidator(allowed_extentions=['jpeg','png','jpg','webp'])],
+        validators=[FileExtensionValidator(['jpeg','png','jpg','webp'])],
         blank=True, null=True
     )
+    join_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-join_date']
+
+    def __str__(self):
+        return f'user {self.username}'
 
 class Topic(models.Model):
-    title = models.CharField(max_length=30)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, NULL=True, related_name="topicsmade")
+    topic = models.CharField(max_length=30)
+    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  related_name="topicsmade")
+
+    def __str__(self):
+        return f'topic {self.topic}'
     
 
 class Post(models.Model):
-    title = models.CharField()
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, NULL=True, related_name="postsmadeuser")
+    post = models.CharField(max_length=30)
+    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="postsmadeuser")
     desciption = models.CharField()
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, NULL=True, related_name="postmadetopic")    
+    image = models.FileField(
+        upload_to=uploaded_image,
+        validators= [FileExtensionValidator(['jpeg','png','jpg','webp','gif'])]
+    )
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, related_name="postmadetopic")    
+    post_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta: 
+        ordering = ['-post_date']
+    
+    def __str__(self):
+        return f'Post by {self.username}'
+
+class Comments(models.Model):
+    username = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name="usermadecomment")
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True, related_name="postmadecomment")
+    comment = models.CharField(max_length =200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    parent = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='replies'
+    )
+    class Meta: 
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'Comment by {self.username}'
+    

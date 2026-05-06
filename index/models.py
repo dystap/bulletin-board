@@ -16,7 +16,7 @@ class User(models.Model):
     email = models.EmailField()
     username = models.CharField(max_length=67)
     birthday = models.DateField()
-    hobby = models.CharField(max_length=67)
+    hobby = models.CharField(max_length=67, blank=True, null=True)
     quote = models.TextField(blank=True, null=True)
     pfp = models.FileField(
         upload_to=uploaded_pfp,

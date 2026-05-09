@@ -8,3 +8,8 @@ def home(request):
     return render(request, "index/home.html", {
    
     })
+
+def poster(request):
+    return render(request, "index/post.html", {
+
+    })

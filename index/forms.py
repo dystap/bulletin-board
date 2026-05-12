@@ -1,9 +1,9 @@
 from django import forms
 
-from models import User
-from models import Topic
-from models import Post
-from models import Comments
+from .models import User
+from .models import Topic
+from .models import Post
+from .models import Comments
 
 class UserForm(forms.Form):
     email = forms.EmailField(
@@ -57,7 +57,6 @@ class UserForm(forms.Form):
 
     )
 
-    join_date = forms.DateTimeField(auto_now_add=True)
 
     def clean(self):
         cleaned_data = super().clean()

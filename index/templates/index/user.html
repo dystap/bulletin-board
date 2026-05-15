@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Post</title>
+        <title>Make Your User!</title>
         <style>
             .form-control {
                 border-radius: 0.5em;
@@ -13,8 +13,8 @@
         </style>
     </head>
     <body>
-        <h1>Post Something!</h1>
-        <form action="{% url 'index:posterSubmit' %}" method="POST" id="Post">
+        <h1>Create your user!</h1>
+        <form action="{% url 'index:makeuser' %}" method="POST">
             {% csrf_token %}
 
             {{ form.as_div }}

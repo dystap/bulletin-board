@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import User
+from .models import UserProfile
 from .models import Topic
 from .models import Post
 from .models import Comments

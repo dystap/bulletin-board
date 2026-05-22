@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 import datetime
 # Create your models here.
@@ -15,8 +16,7 @@ def uploaded_image(instance: "Post", filename):
     return f"Post/{instance.id}/{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}{filename_mime_type}"
 
 class UserProfile(models.Model):
-    email = models.EmailField()
-    username = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="username")
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, related_name="user_profile")
     birthday = models.DateField()
     hobby = models.CharField(max_length=67, blank=True, null=True)
     quote = models.TextField(blank=True, null=True)
@@ -35,7 +35,7 @@ class UserProfile(models.Model):
 
 class Topic(models.Model):
     topic = models.CharField(max_length=30)
-    username = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True,  related_name="topicsmade")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  related_name="topicsmade")
 
     def __str__(self):
         return f'topic {self.topic}'
@@ -43,8 +43,8 @@ class Topic(models.Model):
 
 class Post(models.Model):
     post = models.CharField(max_length=30)
-    username = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, related_name="postsmadeuser")
-    desciption = models.CharField()
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="postsmadeuser")
+    description = models.CharField()
     image = models.FileField(
         upload_to=uploaded_image,
         validators= [FileExtensionValidator(['jpeg','png','jpg','webp','gif'])]
@@ -59,7 +59,7 @@ class Post(models.Model):
         return f'Post by {self.username}'
 
 class Comments(models.Model):
-    username = models.ForeignKey(UserProfile,on_delete=models.SET_NULL, null=True, related_name="usermadecomment")
+    user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name="usermadecomment")
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True, related_name="postmadecomment")
     comment = models.CharField(max_length =200)
     created_at = models.DateTimeField(auto_now_add=True)

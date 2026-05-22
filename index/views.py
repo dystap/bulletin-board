@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm
-from .forms import UserForm
+from django.contrib.auth import login
 from .models import Post
-from .models import UserProfile
-from django.contrib.auth.forms import UserCreationForm
+from .models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
 
@@ -35,7 +35,7 @@ def makeuser(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("post:list")
+            return redirect("index:home")
     else:
         form = UserCreationForm()
 
@@ -43,3 +43,12 @@ def makeuser(request):
         'form' : form
     })
 
+def login(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect("index:home")
+    else:
+        form = AuthenticationForm()
+    return render(request, "index/login.html", {"form": form})

@@ -103,7 +103,7 @@ class TopicForm(forms.ModelForm):
 
 class PostForm(forms.ModelForm):
     class Meta:
-        models = Post
+        model = Post
         fields = ['post', 'description', 'image', 'topic']
         widget = {
             'post': forms.TextInput(attrs={

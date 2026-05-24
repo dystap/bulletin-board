@@ -1,0 +1,27 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Topic</title>
+        <style>
+            .form-control {
+                border-radius: 0.5em;
+                padding: 0.5em;
+                width: 67%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Post Something!</h1>
+        <form action="{% url 'index:topic_post_make' %}" method="POST" id="Post">
+            {% csrf_token %}
+
+            {{ form.as_div }}
+
+            <button type="submit">Post</button>
+
+        </form>
+
+    </body>
+</html>

@@ -78,7 +78,7 @@ class UserForm(forms.Form):
 
 class TopicForm(forms.ModelForm):
     class Meta:
-        models = Topic
+        model = Topic
         fields = ['topic']
         widgets =  {
             'topic': forms.TextInput(attrs={

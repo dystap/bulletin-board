@@ -31,7 +31,7 @@ class UserProfile(models.Model):
         ordering = ['-join_date']
 
     def __str__(self):
-        return f'user {self.username}'
+        return f'user {self.user}'
 
 class Topic(models.Model):
     topic = models.CharField(max_length=30)
@@ -56,7 +56,7 @@ class Post(models.Model):
         ordering = ['-post_date']
     
     def __str__(self):
-        return f'Post by {self.username}'
+        return f'Post by {self.user}'
 
 class Comments(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, related_name="usermadecomment")
@@ -75,5 +75,5 @@ class Comments(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'Comment by {self.username}'
+        return f'Comment by {self.user}'
     

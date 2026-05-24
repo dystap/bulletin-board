@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Posts</title>
+        </head>
+
+        <body>
+            <div class="Posts">
+
+                {% for Post in posts %}
+                <div href="{%url 'index:home'}" class="PostsUI">
+
+                    {{ Post.post }}
+                    {{ Post.description }}
+                    {{ Post.image }}
+                </div>
+                {% endfor %}
+
+            </div>
+        </body>
+
+    </html>

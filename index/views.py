@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm
+from .forms import TopicForm
 from django.contrib.auth import login
 from .models import Post
-from .models import User
+from .models import Topic
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
@@ -12,6 +13,10 @@ def home(request):
     return render(request, "index/home.html", {
    
     })
+
+def post_list(request):
+    posts = Post.objects.all().order_by('post_date')
+    return render(request, 'index/post_list.html', {"posts" : posts})
 
 def poster(request):
     form = PostForm()
@@ -25,10 +30,34 @@ def posterSubmit(request):
     print(request.POST)
 
     Post.objects.create(
-        
+        post = request.POST.get("post"),
+        user = request.POST.get("user"),
+        description = request.POST.get("description"),
+        image = request.POST.get("image"),
+        topic = request.POST.get("topic"),
+        post_date = request.POST.get("post_date"),
+
     )
 
-    return redirect("index/home.html")
+    return redirect("index:home")
+
+
+def topic_post(request):
+    form = TopicForm()
+
+    return render(request, "index/topics.html", {
+        'form': form
+    })
+
+def topic_post_make(request):
+    print(request.POST)
+
+    Topic.objects.create(
+        topic = request.POST.get("topic"),
+        user = request.POST.get("user"),
+    )
+
+    return redirect("index:home")
 
 def makeuser(request):
     if request.method == "POST":
@@ -43,7 +72,7 @@ def makeuser(request):
         'form' : form
     })
 
-def login(request):
+def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():

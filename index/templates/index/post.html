@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>Post Something!</h1>
-        <form action="{% url 'index:posterSubmit' %}" method="POST" id="Post">
+        <form action="{% url 'index:posterSubmit' %}" method="POST" id="Post" enctype="multipart/form-data">
             {% csrf_token %}
 
             {{ form.as_div }}

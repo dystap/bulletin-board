@@ -26,18 +26,11 @@ def poster(request):
     })
 
 def posterSubmit(request):
-    
-    print(request.POST)
-
-    Post.objects.create(
-        post = request.POST.get("post"),
-        user = request.POST.get("user"),
-        description = request.POST.get("description"),
-        image = request.POST.get("image"),
-        topic = request.POST.get("topic"),
-        post_date = request.POST.get("post_date"),
-
-    )
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            form.save()
 
     return redirect("index:home")
 

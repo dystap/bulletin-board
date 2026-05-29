@@ -12,7 +12,13 @@
 
                     {{ Post.post }}
                     {{ Post.description }}
-                    {{ Post.image }}
+
+                    
+
+                    {% if Post.image %}
+                        <img src="{{ Post.image.url }}">
+                    {% endif %}
+                
                 </div>
                 {% endfor %}
 

@@ -4,7 +4,9 @@ from .forms import TopicForm
 from django.contrib.auth import login
 from .models import Post
 from .models import Topic
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -25,16 +27,23 @@ def poster(request):
         'form': form
     })
 
+@login_required
 def posterSubmit(request):
-    if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
+    
+    if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save(user=request.user) 
+                return redirect('index:home')
+            else:
+                print("form_errors:", form.errors)
+    else:
+        form = PostForm()
+            
+    return render(request, 'post.html', {'form': form})
         
-        if form.is_valid():
-            form.save()
 
-    return redirect("index:home")
-
-
+@login_required
 def topic_post(request):
     form = TopicForm()
 
@@ -43,14 +52,20 @@ def topic_post(request):
     })
 
 def topic_post_make(request):
-    print(request.POST)
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            form.save(user=request.user)
+            return redirect('index:home')
+        else:
+            print("form_errors:", form.errors)
+    else:
+        form = TopicForm()
+    return render(request, "index/topics.html", {
+        'form' : form
+    })
 
-    Topic.objects.create(
-        topic = request.POST.get("topic"),
-        user = request.POST.get("user"),
-    )
-
-    return redirect("index:home")
+   
 
 def makeuser(request):
     if request.method == "POST":

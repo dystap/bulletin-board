@@ -93,13 +93,13 @@ class TopicForm(forms.ModelForm):
 
         return cleaned_data    
 
-    def save(self):
-        cleaned_data = self.cleaned_data
-
-        Topic.objects.create(
-            topic = cleaned_data.get("topic"),
-            
-        )
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            instance.user = user
+        if commit:
+            instance.save()
+        return instance
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -116,7 +116,8 @@ class PostForm(forms.ModelForm):
             }),
             'image': forms.FileInput(attrs={
                 'class': 'form-controls',
-                'placeholder': 'Put Image Here'
+                'placeholder': 'Put Image Here',
+                
             })
         }
 
@@ -124,14 +125,13 @@ class PostForm(forms.ModelForm):
         cleaned_data = super().clean()
         return cleaned_data
     
-    def save(self):
-        cleaned_data = self.cleaned_data
-        Post.objects.create(
-            post = cleaned_data.get('post'),
-            description = cleaned_data.get('description'),
-            image = cleaned_data.get('image'),
-        )
-
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            instance.user = user
+        if commit:
+            instance.save()
+        return instance
 
 class CommentForm(forms.ModelForm):
     class Meta: 

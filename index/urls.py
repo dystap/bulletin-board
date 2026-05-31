@@ -1,5 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from index import views
+from django.conf import settings
+from django.conf.urls.static import static
 app_name = 'index'
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,3 +14,7 @@ urlpatterns = [
     path('login/', views.login_view, name="login")
 
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

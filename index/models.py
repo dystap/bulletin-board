@@ -38,7 +38,7 @@ class Topic(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  related_name="topicsmade")
 
     def __str__(self):
-        return f'topic {self.topic}'
+        return self.topic
     
 
 class Post(models.Model):
@@ -46,6 +46,8 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="postsmadeuser")
     description = models.CharField()
     image = models.FileField(
+        blank=True,
+        null=True,
         upload_to=uploaded_image,
         validators= [FileExtensionValidator(['jpeg','png','jpg','webp','gif'])]
     )

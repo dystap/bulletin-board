@@ -1,81 +1,67 @@
 from django import forms
-
-from .models import UserProfile
+from django.contrib.auth.models import User
 from .models import Topic
 from .models import Post
+from django.contrib.auth.forms import UserCreationForm
 from .models import Comments
 
-# class UserForm(forms.Form):
-#     email = forms.EmailField(
-#         required=True,
-#         widget=forms.TextInput(attrs={
-#             "type": "email",
-#             "class": "form-control",
-#             "placeholder": "Enter Your Email",
-#         })
-#     )
+class UserForm(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailField(attrs={
+            "class": "form-control",
+            "placeholder": "Enter Your Email",
+        })
+    )
+    birthday = forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={
+            "type": "date",
+            "class": "form-control",
+            "placeholder": "Enter Your Birthdate",
+        })
+    )
+    # hobby = forms.CharField(
+    #     max_length=67,
+    #     required=False,
+    #     widget=forms.TextInput(attrs={
+    #         "class": "form-control",
+    #         "placeholder": "Enter Your Hobby",
+    #     })
+    # )
+    # quote = forms.CharField(
+    #     required=False,
+    #     widget=forms.Textarea(attrs={
+    #         "class": "form-control",
+    #         "placeholder": "Enter Your Description / Quote!",
+    #     })
+    # )
+    # pfp = forms.FileField(
+    #     required=False,
+    #     widget=forms.FileInput(attrs={
+    #         "type": "file",
+    #         "placeholder": "Enter Your Profile Picture",
+    #     })
 
-#     username = forms.CharField(
-#         required=True,
-#         max_length=67,
-#         widget=forms.TextInput(attrs={
-#             "type": "text",
-#             "class": "form-control",
-#             "placeholder": "Enter Your Username",
-#         })
-#     )
-#     birthday = forms.DateField(
-#         required=True,
-#         widget=forms.DateInput(attrs={
-#             "type": "date",
-#             "class": "form-control",
-#             "placeholder": "Enter Your Birthdate",
-#         })
-#     )
+    # )
 
-#     hobby = forms.CharField(
-#         max_length=67,
-#         required=False,
-#         widget=forms.TextInput(attrs={
-#             "class": "form-control",
-#             "placeholder": "Enter Your Hobby",
-#         })
-#     )
-#     quote = forms.CharField(
-#         required=False,
-#         widget=forms.Textarea(attrs={
-#             "class": "form-control",
-#             "placeholder": "Enter Your Description / Quote!",
-#         })
-#     )
-#     pfp = forms.FileField(
-#         required=False,
-#         widget=forms.FileInput(attrs={
-#             "type": "file",
-#             "placeholder": "Enter Your Profile Picture",
-#         })
+    class Meta(UserCreationForm):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email', 'birthday')
 
-#     )
-
-
-#     def clean(self):
-#         cleaned_data = super().clean()
-
-#         return cleaned_data    
-
-#     def save(self):
-#         cleaned_data = self.cleaned_data
-
-#         User.objects.create(
-#             email = cleaned_data.get("email"),
-#             username = cleaned_data.get("username"),
-#             birthday = cleaned_data.get("birthday"),
-#             hobby = cleaned_data.get("hobby"),
-#             quote = cleaned_data.get("quote"),
-#             pfp = cleaned_data.get("pfp"),
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        
+        if commit:
+            user.save()
+            from .models import Profile
+            Profile.objects.create(
+                user=user, 
+                birthday=self.cleaned_data['birthday']
+            )
             
-#         )
-
+        return user
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic

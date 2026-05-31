@@ -1,0 +1,27 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Make Your User!</title>
+        <style>
+            .form-control {
+                border-radius: 0.5em;
+                padding: 0.5em;
+                width: 67%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Create your user!</h1>
+        <form action="{% url 'index:makeuser' %}" method="POST">
+            {% csrf_token %}
+
+            {{ form.as_div }}
+
+            <button type="submit">Post</button>
+
+        </form>
+
+    </body>
+</html>

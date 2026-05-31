@@ -31,7 +31,7 @@ class UserProfile(models.Model):
         ordering = ['-join_date']
 
     def __str__(self):
-        return f'user {self.user}'
+        return f"{self.user}'s Profile"
 
 class Topic(models.Model):
     topic = models.CharField(max_length=30)

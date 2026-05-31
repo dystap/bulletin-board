@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm
 from .forms import TopicForm
+from .forms import UserForm
 from django.contrib.auth import login
 from .models import Post
 from .models import Topic
@@ -20,6 +21,7 @@ def post_list(request):
     posts = Post.objects.all().order_by('post_date')
     return render(request, 'index/post_list.html', {"posts" : posts})
 
+@login_required
 def poster(request):
     form = PostForm()
 
@@ -51,6 +53,7 @@ def topic_post(request):
         'form': form
     })
 
+@login_required
 def topic_post_make(request):
     if request.method == 'POST':
         form = TopicForm(request.POST)
@@ -68,14 +71,13 @@ def topic_post_make(request):
    
 
 def makeuser(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
+    if request.method == 'POST':
+        form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("index:home")
+            return redirect('login')
     else:
-        form = UserCreationForm()
-
+        form = UserForm()
     return render(request, "index/user.html", {
         'form' : form
     })

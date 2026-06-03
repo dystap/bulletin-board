@@ -5,10 +5,11 @@ from .models import Post
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comments
 
-class UserForm(forms.Form):
+class UserForm(UserCreationForm):
+
     email = forms.EmailField(
         required=True,
-        widget=forms.EmailField(attrs={
+        widget=forms.EmailInput(attrs={
             "class": "form-control",
             "placeholder": "Enter Your Email",
         })
@@ -45,7 +46,7 @@ class UserForm(forms.Form):
 
     # )
 
-    class Meta(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ('email', 'birthday')
 
@@ -54,14 +55,20 @@ class UserForm(forms.Form):
         user.email = self.cleaned_data['email']
         
         if commit:
-            user.save()
-            from .models import Profile
-            Profile.objects.create(
-                user=user, 
-                birthday=self.cleaned_data['birthday']
-            )
+            # user.save()
+            # from .models import UserProfile
+            # UserProfile.objects.create(
+            #     user=user, 
+            #     birthday=self.cleaned_data['birthday'],
+            #     # email = 
+            # )
+            # return user
             
+        
+            test = user.save()
+            print(test)
         return user
+        
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic

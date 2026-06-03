@@ -11,10 +11,13 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def home(request):
-   
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
     return render(request, "index/home.html", {
-   
+        'user' : username
     })
 
 def post_list(request):
@@ -75,7 +78,7 @@ def makeuser(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('index:login')
     else:
         form = UserForm()
     return render(request, "index/user.html", {

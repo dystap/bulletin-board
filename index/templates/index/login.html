@@ -13,6 +13,9 @@
         </style>
     </head>
     <body>
+        <!-- {% if user.is_authenticated %}
+        test
+        {% else %} -->
         <h1>Login</h1>
         <form action="{% url 'index:login' %}" method="POST">
             {% csrf_token %}
@@ -22,6 +25,8 @@
             <button type="submit">Post</button>
 
         </form>
+        <!-- {% endif %} -->
+        
 
     </body>
 </html>

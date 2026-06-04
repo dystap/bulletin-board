@@ -10,9 +10,20 @@
             {% if user.is_authenticated %}
                 <h1>Welcome back, {{ user.username }}!</h1>
                 <p>Great to see you again.</p>
-            {% else %}
+
+                 <form action="{% url 'index:logout' %}" method="post">
+                   {% csrf_token %}
+                    <button type="submit">Log Out</button>
+                    </form>
+                 {% else %}
                 <h1>Welcome to our website!</h1>
             {% endif %}
+            
+            <a href="{% url 'index:post_list' %}"> Go to postlist </a>
+            <a href="{% url 'index:topic_post' %}"> Make a topic </a>
+            <a href="{% url 'index:post' %}"> Go to post smth </a>
+
+
         </body>
 </html>
 

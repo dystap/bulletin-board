@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import UserProfile
 from .models import Topic
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm
@@ -22,52 +23,43 @@ class UserForm(UserCreationForm):
             "placeholder": "Enter Your Birthdate",
         })
     )
-    # hobby = forms.CharField(
-    #     max_length=67,
-    #     required=False,
-    #     widget=forms.TextInput(attrs={
-    #         "class": "form-control",
-    #         "placeholder": "Enter Your Hobby",
-    #     })
-    # )
-    # quote = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(attrs={
-    #         "class": "form-control",
-    #         "placeholder": "Enter Your Description / Quote!",
-    #     })
-    # )
-    # pfp = forms.FileField(
-    #     required=False,
-    #     widget=forms.FileInput(attrs={
-    #         "type": "file",
-    #         "placeholder": "Enter Your Profile Picture",
-    #     })
 
-    # )
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ('email', 'birthday')
 
-    def save(self, commit=True):
+    def save(self, commit=True, join_date=None):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
-        
+        if join_date:
+            user.join_date = join_date
         if commit:
-            # user.save()
-            # from .models import UserProfile
-            # UserProfile.objects.create(
-            #     user=user, 
-            #     birthday=self.cleaned_data['birthday'],
-            #     # email = 
-            # )
-            # return user
-            
-        
-            test = user.save()
-            print(test)
+            user.save()
         return user
+        
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['birthday', 'hobby', 'quote', 'pfp']
+        widgets = {
+            'birthday': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'form-control',
+                'placeholder': "Change Your Birthdate"
+            }),
+            'hobby': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': "Enter/Change Your Hobby"
+            }),
+            'quote': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': "Enter/Change Your Description",
+                'rows': 4,
+            })
+        }
+     
         
 class TopicForm(forms.ModelForm):
     class Meta:
@@ -118,10 +110,12 @@ class PostForm(forms.ModelForm):
         cleaned_data = super().clean()
         return cleaned_data
     
-    def save(self, commit=True, user=None):
+    def save(self, commit=True, user=None, post_date=None):
         instance = super().save(commit=False)
         if user:
             instance.user = user
+        if post_date:
+            instance.post_date = post_date
         if commit:
             instance.save()
         return instance

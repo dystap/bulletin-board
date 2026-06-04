@@ -17,7 +17,7 @@ def uploaded_image(instance: "Post", filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, related_name="user_profile")
-    birthday = models.DateField()
+    birthday = models.DateField(blank=True, null=True)
     hobby = models.CharField(max_length=67, blank=True, null=True)
     quote = models.TextField(blank=True, null=True)
     pfp = models.FileField(
@@ -25,7 +25,7 @@ class UserProfile(models.Model):
         validators=[FileExtensionValidator(['jpeg','png','jpg','webp'])],
         blank=True, null=True
     )
-    join_date = models.DateTimeField(auto_now_add=True)
+    join_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ['-join_date']
@@ -52,7 +52,7 @@ class Post(models.Model):
         validators= [FileExtensionValidator(['jpeg','png','jpg','webp','gif'])]
     )
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, related_name="postmadetopic")    
-    post_date = models.DateTimeField(auto_now_add=True)
+    post_date = models.DateTimeField()
 
     class Meta: 
         ordering = ['-post_date']

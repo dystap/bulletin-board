@@ -11,8 +11,9 @@ urlpatterns = [
     path('maketopic', views.topic_post, name='topic_post'),
     path('maketopic/submit', views.topic_post_make, name='topic_post_make'),
     path('makeuser', views.makeuser, name='makeuser'),
-    path('login', views.login_view, name="login")
-
+    path('login', views.login_view, name="login"),
+    path('logout', views.logout_view, name="logout"),
+    path('users/<int:id>', views.profile, name="profile"),
 ]
 
 

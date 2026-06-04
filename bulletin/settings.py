@@ -160,3 +160,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
 
 LOGIN_URL = 'index:login' 
+LOGIN_REDIRECT_URL = 'index:home'
+LOGOUT_REDIRECT_URL = 'index:home'
+
+REDIRECT_FIELD_NAME = 'next'
+REDIRECT_AUTHENTICATED_USER = True

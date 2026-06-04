@@ -9,10 +9,12 @@
 
                 {% for Post in posts %}
                     <div class="PostsUI">
+                        <h4> {{ Post.post_date }}</h4>
                         <h2>{{ Post.post }}</h3>
                         <h3> Topic: {{ Post.topic }} </h3>
                         <h3> By: {{ Post.user }}</h2>
                         <p>{{ Post.description }}</p>
+                        <!-- <p>{{ Post.</p> -->
 
 
                         {% if Post.image %}

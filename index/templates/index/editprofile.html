@@ -13,19 +13,19 @@
         </style>
     </head>
     <body>
-        {% if user.is_authenticated %}
-        tests
-        {% else %}
-            <h1>Create your user!</h1>
-            <form action="{% url 'index:makeuser' %}" method="POST">
+        {% extends 'index/base.html' %} {% block content %}
+        <div class="form-control">
+            <h2>Edit Your Profile</h2>
+            
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-
+                
                 {{ form.as_div }}
-
-                <button type="submit">Post</button>
-
+                
+                <button type="submit">Save Changes</button>
             </form>
-        {% endif %}
+        </div>
+        {% endblock %}
 
     </body>
 </html>

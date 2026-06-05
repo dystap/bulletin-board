@@ -7,9 +7,14 @@
         </title>
     </head>
     <body>
-        {{ TheProfile.pfp }}
-        {{ TheProfile.user }}
-        {{ TheProfile.hobby }}
-        {{ TheProfile.quote }}
+        {% if TheProfile.pfp %}
+            <img src="{{ TheProfile.pfp.url }}" alt="profile picture">
+        {% else %}
+            <img src="{% static "index/img/blank-pfp.jpg"  %}">
+        {% endif %}
+        
+        {{ TheProfile.user }} </br>
+        {{ TheProfile.hobby }} </br>
+        {{ TheProfile.quote }} </br>
     </body>
 </html>

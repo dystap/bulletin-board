@@ -1,0 +1,19 @@
+{% load static %}
+
+<html>
+    <head>
+        <title> 
+            {{ ThePost.post }}
+        </title>
+    </head>
+    <body>
+        {{ ThePost.post}}</br>
+        {{ ThePost.user }} </br>
+        {{ ThePost.description }} </br>
+        {{ ThePost.topic }} </br>
+
+        {% if ThePost.image %}
+            <img src="{{ ThePost.image.url }}" alt="Post Image">
+            {% endif %}
+    </body>
+</html>

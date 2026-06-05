@@ -20,8 +20,13 @@ def home(request):
     })
 
 def post_list(request):
-    posts = Post.objects.all().order_by('post_date')
+    posts = Post.objects.all().order_by('post_date').select_related('user', 'user__user_profile',)
     return render(request, 'index/post_list.html', {"posts" : posts})
+
+def thepost(request, id):
+    ThePost = get_object_or_404(Post, id=id)
+    context = {'ThePost': ThePost}
+    return render(request, 'index/thepost.html', context)
 
 @login_required
 def poster(request):

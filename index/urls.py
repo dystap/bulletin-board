@@ -14,6 +14,8 @@ urlpatterns = [
     path('login', views.login_view, name="login"),
     path('logout', views.logout_view, name="logout"),
     path('users/<int:id>', views.profile, name="profile"),
+    path('editprofile', views.edit_profile, name="editprofile"),
+    path('post_list/<int:id>', views.thepost, name="thepost"),
 ]
 
 

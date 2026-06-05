@@ -22,7 +22,7 @@ class UserProfile(models.Model):
     quote = models.TextField(blank=True, null=True)
     pfp = models.FileField(
         upload_to=uploaded_pfp,
-        validators=[FileExtensionValidator(['jpeg','png','jpg','webp'])],
+        validators=[FileExtensionValidator(['jpeg','png','jpg','webp', 'gif'])],
         blank=True, null=True
     )
     join_date = models.DateTimeField(blank=True, null=True)

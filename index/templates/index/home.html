@@ -1,30 +1,186 @@
-
-<html>
+{% load static %}
+<!DOCTYPE html>
+<html>    
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
         <title>Introduction</title>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+        <style>
+            * {
+                background-color:  rgb(183, 59, 35);
+                
+            }
+            body {
+               
+                font-family: "Roboto Slab", serif;
+                font-optical-sizing: auto;
+                font-weight: 1rem;
+            }
+
+
+            body > * {
+                display: flex;
+                flex-direction: column;
+                
+            }
+
+            .title {
+                background-color:  rgb(254, 209, 163);
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                display: flex;
+                flex-direction: row;
+                gap: 10px; 
+            }
+
+            .text-container{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5 vw;
+                background: transparent;
+            }
+            
+            .title h1, .title p, .title a{
+                background: transparent;
+                margin: 0;
+                color: #522a21;
+            }
+            .title img{
+                background: transparent;
+                width: clamp(50vw,50%,20%);
+                height: clamp(50vw,50%,20%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;
+            }
+            
+
+            @media (max-width: 600px) {
+                body * {
+                display: flex;
+                flex-direction: column;
+                }
+
+                body {
+                    background-color: rgb(254, 209, 163);
+                }
+            }
+
+            .button {
+                display: flex;
+                margin: auto;
+                margin-top: 10px;
+                padding: 0.5em;
+                background-color: rgb(92, 38, 16);
+                border-radius: 5px;
+                border: 2rem;
+                border-color: rgb(255, 255, 255);;
+                color: white;
+            }
+            
+
+            .PostsUI{
+                background-color:  rgb(254, 209, 163);
+                padding: 2vw;
+                
+                
+            }
+
+            .PostsUI h4, .PostsUI h3, .PostsUI a, .PostsUI p{
+                background: transparent;
+            }
+ 
+            .titlepfp{
+                background: transparent;
+            }
+    </style>
+
       </head>
         <body>
-            hello world or smth 
-
 
             {% if user.is_authenticated %}
+            
+            <div class="title">
+                <img src="{% static 'index/img/bulletinlogo.png'  %}">
+
+                <div class="text-container">
+                <a href="{% url 'index:editprofile' %}">
+                <img src="{{ user.user_profile.pfp.url }}" style="
+                    width: 5vw;
+                    height: 5vw;" >
+                </a>
+                
                 <h1>Welcome back, {{ user.username }}!</h1>
                 <p>Great to see you again.</p>
+    
+                </div>
+                
 
-                 <form action="{% url 'index:logout' %}" method="post">
-                   {% csrf_token %}
-                    <button type="submit">Log Out</button>
-                    </form>
+            </div>
+            
+            
+
+                
                  {% else %}
                 <h1>Welcome to our website!</h1>
+
+                <a href="{% url 'index:login' %}"> Login here!</a>
             {% endif %}
             
-            <a href="{% url 'index:post_list' %}"> Go to postlist </a>
-            <a href="{% url 'index:topic_post' %}"> Make a topic </a>
-            <a href="{% url 'index:post' %}"> Go to post smth </a>
-            <a href="{% url 'index:editprofile' %}"> Edit your profile </a>
+          
 
 
+            <div>
+                 <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">
+                    <p style="
+                    color: rgb(254, 209, 163);">New Posts</p></a>
+
+                <div class="Posts">
+                {% for Post in posts %}
+                    <div class="PostsUI">
+                        <h4> {{ Post.post_date }}</h4>
+
+                        <div class="titlepfp">
+                        <img src="{{ Post.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
+                        <a href="{% url 'index:thepost' Post.id %}">{{ Post.post }}</a>
+                        </div>
+                        <h3> Topic: {{ Post.topic }} </h3>
+                        <h3> By: {{ Post.user }}</h2>
+                        <p>{{ Post.description }}</p>
+                        <!-- <p>{{ Post.</p> -->
+
+
+                        {% if Post.image %}
+                            <img src="{{ Post.image.url }}" alt="Post Image">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+            </div>
+            </div>
+
+
+{% if user.is_authenticated %}
+             <form action="{% url 'index:logout' %}" method="post">
+                   {% csrf_token %}
+                    <button type="submit", class="button">Log Out</button>
+                    </form>
+                    {% endif %}
         </body>
 </html>
 

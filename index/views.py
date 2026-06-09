@@ -16,9 +16,11 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-   
+    posts = Post.objects.all().order_by('post_date').select_related('user', 'user__user_profile',)
+
+
     return render(request, "index/home.html", {
-       
+       "posts": posts
     })
 
 def post_list(request):

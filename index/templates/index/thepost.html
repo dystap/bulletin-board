@@ -7,6 +7,7 @@
         </title>
     </head>
     <body>
+        <img src="{{ ThePost.user.user_profile.pfp.url }}" alt="Profile Picture" style="width: 40px; height: 40px;">
         {{ ThePost.post}}</br>
         {{ ThePost.user }} </br>
         {{ ThePost.description }} </br>
@@ -15,5 +16,46 @@
         {% if ThePost.image %}
             <img src="{{ ThePost.image.url }}" alt="Post Image">
             {% endif %}
+
+
+           <div>
+            <h1>Comments</h1>
+
+                {% for comment in comments %}
+                    <div class="comment-container" style="margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-radius: 5px; border-left: 4px solid #007bff;">
+                        
+                        <p><img src="{{ comment.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
+                            <strong>{{ comment.user.username }}</strong> says:</p>
+                        <p>{{ comment.comment }}</p> 
+
+                        <div class="replies-section" style="margin-left: 30px; margin-top: 15px; background: #fff; padding: 10px; border-radius: 4px; border-left: 2px dashed #ccc;">
+                            <h4>Replies:</h4>
+                            {% for reply in comment.replies.all %}
+                                <div class="reply-item" style="margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                    <p> <img src="{{ reply.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
+                                        <strong>{{ reply.user.username }}</strong> replied:</p>
+                                    <p>{{ reply.comment }}</p>
+                                </div>
+                            {% empty %}
+                                <p style="color: #888; font-size: 0.9em;">No replies yet.</p>
+                            {% endfor %}
+                        </div>
+                        <form method="POST" action="{% url 'index:thepost' ThePost.id %}" style="margin-top: 15px;">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <button type="submit">Submit Reply</button>
+                        </form>
+                    </div>
+                {% empty %}
+                    <p>No comments yet lol, make the first one!</p>
+                    <form method="POST" action="{% url 'index:thepost' ThePost.id %}" style="margin-top: 15px;">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <button type="submit">Submit Reply</button>
+                        </form>
+                {% endfor %}
+            </div>
     </body>
 </html>

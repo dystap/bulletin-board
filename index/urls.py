@@ -16,6 +16,7 @@ urlpatterns = [
     path('users/<int:id>', views.profile, name="profile"),
     path('editprofile', views.edit_profile, name="editprofile"),
     path('post_list/<int:id>', views.thepost, name="thepost"),
+   
 ]
 
 

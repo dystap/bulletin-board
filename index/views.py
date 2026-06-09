@@ -4,9 +4,11 @@ from .forms import PostForm
 from .forms import TopicForm
 from .forms import UserForm
 from .forms import UserProfileForm
+from .forms import CommentForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Post
 from .models import Topic
+from .models import Comments
 from .models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -21,11 +23,45 @@ def home(request):
 
 def post_list(request):
     posts = Post.objects.all().order_by('post_date').select_related('user', 'user__user_profile',)
-    return render(request, 'index/post_list.html', {"posts" : posts})
+
+    selected_topic = request.GET.get('topic')
+    if selected_topic:
+        posts = posts.filter(topic_id=selected_topic)
+
+    all_topics = Topic.objects.all()
+    context = { 
+        "posts" : posts,
+        "all_topics" : all_topics,
+        "selected_topic": selected_topic
+    }
+    return render(request, 'index/post_list.html', context)
+
 
 def thepost(request, id):
-    ThePost = get_object_or_404(Post, id=id)
-    context = {'ThePost': ThePost}
+    post_queryset = Post.objects.select_related('user__user_profile')
+    ThePost = get_object_or_404(post_queryset, id=id)
+    comments = ThePost.postmadecomment.filter(parent__isnull=True).select_related('user__user_profile')
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = ThePost
+            new_comment.user = request.user
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                parent_comment = get_object_or_404(Comments, id=parent_id)
+                new_comment.parent = parent_comment
+
+            new_comment.save()
+            return redirect('index:thepost', id=ThePost.id)
+    else:
+        form = CommentForm()
+
+    context = {'ThePost': ThePost,
+               'comments': comments,
+               'form': form
+               }
     return render(request, 'index/thepost.html', context)
 
 @login_required

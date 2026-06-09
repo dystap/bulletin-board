@@ -122,13 +122,9 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta: 
-        models = Comments
-        fields = ['post', 'comment']
-        widget = {
-            'post': forms.TextInput(attrs={
-                'class': 'form-controls',
-                'placeholder': 'Enter Comment Title',
-            }),
+        model = Comments
+        fields = ['comment']
+        widgets = {
             'comment': forms.TextInput(attrs={
                 'class': 'form-controls',
                 'placeholder': 'Enter Comment Content',

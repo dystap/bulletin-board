@@ -5,56 +5,202 @@
         <title> 
             {{ ThePost.post }}
         </title>
+             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+
+        <style>
+
+            * {
+                background-color:  rgb(183, 59, 35);
+                
+            }
+            body {
+                
+                font-family: "Roboto Slab", serif;
+                font-optical-sizing: auto;
+                font-weight: 1rem;
+                
+            }
+
+
+            body > * {
+                display: flex;
+                flex-direction: column;
+                
+            }
+
+            .post-container{
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 25px;
+                padding: 15px;
+                background: rgb(254, 209, 163);
+                border-radius: 5px;
+                border-left: 4px solid #802525;
+                width: 100%;
+                max-width: 85vw;
+                justify-content: center;
+                align-items: left;
+                box-sizing: border-box;
+            }
+
+            .user{
+                background: transparent;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: left;
+                align-items: center;
+                box-sizing: border-box;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: 100%;
+                font-style: normal;
+                
+            }
+
+            .comment-container{
+                margin-bottom: 25px;
+                padding: 15px;
+                background: rgb(254, 209, 163);
+                border-radius: 5px;
+                border-left: 4px solid #802525;
+            }
+
+            .comment-container p{
+                background: transparent;
+            }
+            .comment-title{
+                 font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: 100%;
+                font-style: normal;
+                background: transparent;
+            }
+
+            .comment-user{
+                background: transparent;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: left;
+                align-items: center;
+                box-sizing: border-box;
+            }
+            
+            .replies-section{
+                margin-left: 30px; 
+                margin-top: 15px; 
+                background: rgb(204, 168, 131); 
+                padding: 10px; 
+                border-radius: 4px; 
+                border-left: 2px dashed #642b2b;
+            }
+
+            .reply-item{
+                margin-bottom: 10px;
+                border-bottom: 1px solid rgb(218, 176, 135);
+                padding-bottom: 5px;
+                background: transparent;
+            }
+
+            .form-container{
+                flex-direction: row;
+                background: rgb(204, 168, 131); 
+            }
+
+            .formUI {
+                background: transparent;
+            }
+
+            .form-controls{
+                background: transparent;
+            }
+        </style>
     </head>
     <body>
-        <img src="{{ ThePost.user.user_profile.pfp.url }}" alt="Profile Picture" style="width: 40px; height: 40px;">
-        {{ ThePost.post}}</br>
-        {{ ThePost.user }} </br>
-        {{ ThePost.description }} </br>
-        {{ ThePost.topic }} </br>
+        <div class="post-container">
+                <div class="user">
 
-        {% if ThePost.image %}
-            <img src="{{ ThePost.image.url }}" alt="Post Image">
-            {% endif %}
+                    <img src="{{ ThePost.user.user_profile.pfp.url }}" alt="Profile Picture" style="width: 40px; height: 40px;">
+                    <p>{{ ThePost.user }} </p>
 
+                </div>
+                    
+                    {{ ThePost.post}}</br>
+                    
+                    {{ ThePost.description }} </br>
+                    {{ ThePost.topic }} </br>
+
+                    {% if ThePost.image %}
+                        <img src="{{ ThePost.image.url }}" alt="Post Image", style="width: 100%;">
+                        {% endif %}
+
+
+        </div>
+        
 
            <div>
             <h1>Comments</h1>
 
                 {% for comment in comments %}
-                    <div class="comment-container" style="margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-radius: 5px; border-left: 4px solid #007bff;">
+                    <div class="comment-container" >
                         
-                        <p><img src="{{ comment.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
-                            <strong>{{ comment.user.username }}</strong> says:</p>
+                        <div class="comment-user">
+
+                                <p><img src="{{ comment.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
+                            <p class="comment-title" style="background:  rgb(254, 209, 163);">{{ comment.user.username }}</p> says:</p>
+                        </div>
+                        
                         <p>{{ comment.comment }}</p> 
 
-                        <div class="replies-section" style="margin-left: 30px; margin-top: 15px; background: #fff; padding: 10px; border-radius: 4px; border-left: 2px dashed #ccc;">
-                            <h4>Replies:</h4>
+                        <div class="replies-section">
+                            <h4 style="background: transparent;">Replies:</h4>
                             {% for reply in comment.replies.all %}
-                                <div class="reply-item" style="margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                                <div class="reply-item">
                                     <p> <img src="{{ reply.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
-                                        <strong>{{ reply.user.username }}</strong> replied:</p>
+                                        <strong style="background: transparent;">{{ reply.user.username }}</strong> replied:</p>
                                     <p>{{ reply.comment }}</p>
                                 </div>
                             {% empty %}
-                                <p style="color: #888; font-size: 0.9em;">No replies yet.</p>
+                                <p class="comment-container">No replies yet.</p>
                             {% endfor %}
                         </div>
-                        <form method="POST" action="{% url 'index:thepost' ThePost.id %}" style="margin-top: 15px;">
+                        <div class="form-container">
+                            <form method="POST" action="{% url 'index:thepost' ThePost.id %}" class="formUI">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <input type="hidden" name="parent_id" value="{{ comment.id }}">
                             <button type="submit">Submit Reply</button>
                         </form>
                     </div>
+                        
+                    </div>
                 {% empty %}
-                    <p>No comments yet lol, make the first one!</p>
-                    <form method="POST" action="{% url 'index:thepost' ThePost.id %}" style="margin-top: 15px;">
+                <div class="comment-container">
+                    <p >No comments yet lol, make the first one!</p>
+
+                    <div class="form-container">
+                        <form method="POST" action="{% url 'index:thepost' ThePost.id %}" class="formUI">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <input type="hidden" name="parent_id" value="{{ comment.id }}">
                             <button type="submit">Submit Reply</button>
                         </form>
+
+                    </div>
+
+                </div>
+                    
+                    
                 {% endfor %}
             </div>
     </body>

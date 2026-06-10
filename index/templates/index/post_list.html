@@ -1,13 +1,217 @@
+{% load static %}
 <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Posts</title>
-        </head>
+<html>    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
+        <title>Introduction</title>
 
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+        <style>
+            * {
+                background-color:  rgb(183, 59, 35);
+                
+            }
+            body {
+               
+                font-family: "Roboto Slab", serif;
+                font-optical-sizing: auto;
+                font-weight: 1rem;
+                
+            }
+
+
+            body > * {
+                display: flex;
+                flex-direction: column;
+                
+            }
+
+            .title {
+                background-color:  rgb(254, 209, 163);
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                display: flex;
+                flex-direction: row;
+
+                align-items: center;
+                justify-content: space-between;
+            }
+
+
+            .text-container{
+                width: 200px;
+                display: flex;
+                justify-content: flex-end;
+                background: transparent;
+            }
+            
+            .title h1, .title p, .title a{
+                background: transparent;
+                margin: 0;
+                color: #522a21;
+            }
+            .title img{
+                background: transparent;
+                /* width: clamp(30vw,35vw,50vw); */
+                width: 200px;
+                height: 35%;
+                display: flex;
+                flex-direction: column; 
+                justify-content: center;
+                align-items: center;
+                box-sizing: border-box;
+            }
+            
+
+            @media (max-width: 600px) {
+                body * {
+                display: flex;
+                flex-direction: column;
+                }
+
+                body {
+                    background-color: rgb(254, 209, 163);
+                }
+            }
+
+            .button {
+                display: flex;
+                margin: auto;
+                margin-top: 10px;
+                padding: 0.5em;
+                background-color: rgb(92, 38, 16);
+                border-radius: 5px;
+                border: 2rem;
+                border-color: rgb(255, 255, 255);;
+                color: white;
+            }
+
+            
+            
+            .Posts{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+            .PostsUI{
+                background-color:  rgb(145, 97, 82);
+                padding: 2vw;
+                width: 100%;
+                max-width: 50vw;
+                box-sizing: border-box;
+                border: 1rem;
+                border-style: solid;
+                border-color: rgb(207, 163, 118);
+                border-radius: 5px;
+                
+            }
+            .logo{
+                  background: transparent;
+                width: clamp(50vw,20%,50%);
+                height: clamp(50vw,20%,50%);
+                display: flex;
+                flex-direction: column;
+                
+                align-items: center;
+            }
+
+            .PostsUI h4, .PostsUI h3, .PostsUI a, .PostsUI p{
+                background: transparent;
+                width: 100%;
+            }
+            .PostsUI p{
+                overflow-wrap: break-word ;
+                word-break: break-word;
+            }
+ 
+            .titlepfp{
+                background: transparent;
+            }
+
+            .postimg{
+                width: 100%;
+            }
+
+            .postitle{
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                color: black;
+            }
+
+            .postuser{
+                display: flex;
+                flex-direction: row;
+                background: transparent;
+                gap: 1rem;
+            }
+
+            .topic-filter-bar{
+                display: flex;
+                margin: auto;
+                background-color: rgb(207, 163, 118);
+                width: 100vw;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1vw;
+            }
+
+            .topic-filter-bar strong{
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .topic-filter-bar a{
+                width: 100%;
+            }
+            </style>
+            </head>
         <body>
 
+            <div class="title">
+                <img src="{% static 'index/img/bulletinlogo.png'  %}">
 
-           <div class="topic-filter-bar" style="margin-bottom: 20px; padding: 10px; background: #f5f5f5;">
+                
+                <h1>Post List!</h1>
+                
+                <div class="text-container">
+                <a href="{% url 'index:editprofile' %}">
+
+                <img src="{{ user.user_profile.pfp.url }}" style="
+                    width: 5vw;
+                    height: 5vw;" >
+                </a>    
+    
+                </div>
+                
+
+            </div>
+            
+            
+
+
+           <div class="topic-filter-bar">
             <strong>Filter by Topic:</strong>
     
                 <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">All Posts</a>
@@ -19,17 +223,38 @@
                 {% endfor %}
             </div>
 
-            <div class="Posts">
+            <div>
+                 
+
+                <div class="Posts">
                 {% for Post in posts %}
                     <div class="PostsUI">
                         <h4> {{ Post.post_date }}</h4>
-                        <img src="{{ Post.user.user_profile.pfp.url }}" style="width: 40px; height: 40px;">
-                        <a href="{% url 'index:thepost' Post.id %}">{{ Post.post }}</a>
+                         <div class="postuser">
+                            <img src="{{ Post.user.user_profile.pfp.url }}" style="width: 50px; height: 50px">
+                            <h3> By: {{ Post.user }}</h3>
+                        </div>
+                        <div class="titlepfp">
+                        
+                        <a href="{% url 'index:thepost' Post.id %}">
+                           <h3 class="postitle"> {{ Post.post }}</h3>
+                        </a>
+                        </div>
                         <h3> Topic: {{ Post.topic }} </h3>
-                        <h3> By: {{ Post.user }}</h2>
+                       
+                        
                         <p>{{ Post.description }}</p>
                         <!-- <p>{{ Post.</p> -->
 
+
+                        {% if Post.image %}
+                            <img src="{{ Post.image.url }}" alt="Post Image" class="postimg">
+                        {% endif %}
+                    </div>
+             
+
+                </div>
+            </div>
 
                         {% if Post.image %}
                             <img src="{{ Post.image.url }}" alt="Post Image">

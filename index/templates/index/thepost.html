@@ -114,11 +114,28 @@
 
             .form-container{    
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 background: rgb(204, 168, 131); 
                 justify-content: left; 
                 gap: 15rem;  
                 margin-top: 1rem;   
+            }
+
+            input[type="text"] {
+                width: 250px;
+                padding: 10px 12px;
+                border: 2px solid #8b6f47;
+                border-radius: 8px;
+                background-color: #f5e6d3;
+                color: #4a3620;
+                font-size: 14px;
+                outline: none;
+                transition: all 0.2s ease;
+            }
+
+            input[type="text"]:focus {
+                border-color: #d67b45;
+                box-shadow: 0 0 8px rgba(214, 123, 69, 0.3);
             }
 
             .formUI {
@@ -147,6 +164,14 @@
             }
             .submit-button{
                 background: rgb(238, 102, 75);
+                display: flex;
+                margin: auto;
+                margin-top: 10px;
+                padding: 0.5em;
+                border-radius: 5px;
+                border: 2rem;
+                border-color: rgb(255, 255, 255);;
+                color: rgb(71, 28, 28);
                 
             }
         </style>
@@ -156,7 +181,7 @@
                 <div class="user">
 
                     <img src="{{ ThePost.user.user_profile.pfp.url }}" alt="Profile Picture" style="width: 40px; height: 40px;">
-                    <p>{{ ThePost.user }} </p>
+                    <p style="background: transparent;">{{ ThePost.user }} </p>
 
                 </div>
                     
@@ -166,7 +191,10 @@
                     {{ ThePost.topic }} </br>
 
                     {% if ThePost.image %}
-                        <img src="{{ ThePost.image.url }}" alt="Post Image", style="width: 100%;">
+                        <img src="{{ ThePost.image.url }}" alt="Post Image", style="
+                        width: clamp(15vw, 25vw, 50vw);
+                        
+                        ">
                         {% endif %}
 
 

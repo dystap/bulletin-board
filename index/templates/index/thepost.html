@@ -79,11 +79,11 @@
                 background: transparent;
             }
             .comment-title{
-                 font-family: "Fjalla One", sans-serif;
+                font-family: "Fjalla One", sans-serif;
                 font-weight: 400;
                 font-size: 100%;
                 font-style: normal;
-                background: transparent;
+                background: rgb(254, 209, 163);
             }
 
             .comment-user{
@@ -112,17 +112,42 @@
                 background: transparent;
             }
 
-            .form-container{
+            .form-container{    
+                display: flex;
                 flex-direction: row;
                 background: rgb(204, 168, 131); 
+                justify-content: left; 
+                gap: 15rem;  
+                margin-top: 1rem;   
             }
 
             .formUI {
                 background: transparent;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .formUI label {
+                background: transparent;
+            }
+
+            .formUI input {
+                background: transparent;
+                overflow-wrap: break-word;
+
+            }
+
+            .form-controls p, .form-controls label {
+                background: transparent ;  
             }
 
             .form-controls{
                 background: transparent;
+            }
+            .submit-button{
+                background: rgb(238, 102, 75);
+                
             }
         </style>
     </head>
@@ -179,7 +204,7 @@
                             {% csrf_token %}
                             {{ form.as_p }}
                             <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                            <button type="submit">Submit Reply</button>
+                            <button type="submit" class="submit-button">Submit Reply</button>
                         </form>
                     </div>
                         

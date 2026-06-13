@@ -165,9 +165,11 @@
                 margin: auto;
                 background-color: rgb(207, 163, 118);
                 width: 100vw;
-                display: flex;
+                justify-content: center;
+                align-items: center;
                 flex-direction: column;
                 margin-bottom: 1vw;
+                margin-top: 1vw;
             }
 
             .topic-filter-bar strong{
@@ -180,10 +182,15 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
+                background-color: transparent;
             }
 
             .topic-filter-bar a{
                 width: 100%;
+            }
+
+            .topic-filter{
+                display: flex;
             }
             </style>
             </head>
@@ -213,14 +220,16 @@
 
            <div class="topic-filter-bar">
             <strong>Filter by Topic:</strong>
-    
-                <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">All Posts</a>
+                <div class="topic-filter">
 
-                {% for topic in all_topics %}
-                    <a href="{% url 'index:post_list' %}?topic={{ topic.id }}" style="margin-right: 15px;">
-                        {{ topic.topic }}
-                    </a>
-                {% endfor %}
+                    <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">All Posts</a>
+                    {% for topic in all_topics %}
+                        <a href="{% url 'index:post_list' %}?topic={{ topic.id }}" style="margin-right: 15px;">
+                            {{ topic.topic }}
+                        </a>
+                    {% endfor %}
+                </div>
+                
             </div>
 
             <div>

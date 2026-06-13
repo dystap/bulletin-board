@@ -109,7 +109,7 @@
             }
             .PostsUI{
                 background-color:  rgb(145, 97, 82);
-                padding: 2vw;
+                padding: 1rem;
                 width: 100%;
                 max-width: 50vw;
                 box-sizing: border-box;
@@ -131,7 +131,9 @@
 
             .PostsUI h4, .PostsUI h3, .PostsUI a, .PostsUI p{
                 background: transparent;
-                width: 100%;
+                margin-top: 0.78rem;
+                margin-bottom: 0.78rem;
+                
             }
             .PostsUI p{
                 overflow-wrap: break-word ;
@@ -140,6 +142,7 @@
  
             .titlepfp{
                 background: transparent;
+                height: auto;
             }
 
             .postimg{
@@ -149,8 +152,10 @@
             .postitle{
                 font-family: "Fjalla One", sans-serif;
                 font-weight: 400;
-                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-size: clamp(1rem, 2rem , 3rem);
                 color: black;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
             }
 
             .postuser{
@@ -158,18 +163,19 @@
                 flex-direction: row;
                 background: transparent;
                 gap: 1rem;
+               
             }
 
             .topic-filter-bar{
                 display: flex;
                 margin: auto;
-                background-color: rgb(207, 163, 118);
+                background: rgb(138, 41, 22);
                 width: 100vw;
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
                 margin-bottom: 1vw;
-                margin-top: 1vw;
+                
             }
 
             .topic-filter-bar strong{
@@ -191,7 +197,34 @@
 
             .topic-filter{
                 display: flex;
+                background: transparent;
+
             }
+
+            .topic-filter a{
+                display: flex;
+                background: rgb(223, 182, 140);
+                border-radius: 10%;
+                margin: 1vw;
+                width: 110px;
+                height: 45px;
+                border: 1vw;
+                border-color: rgb(223, 182, 140);
+                font-family: "Fjalla One", sans-serif;
+                padding: 10px 20px;
+                font-size: 23px;
+                font-style: normal;
+                color: black;
+                text-align: center;
+                justify-content: center;
+
+            }
+
+
+            .description{
+                text-align: justify;
+            }
+
             </style>
             </head>
         <body>
@@ -252,7 +285,7 @@
                         <h3> Topic: {{ Post.topic }} </h3>
                        
                         
-                        <p>{{ Post.description }}</p>
+                        <p class="description">{{ Post.description }}</p>
                         <!-- <p>{{ Post.</p> -->
 
 
@@ -261,17 +294,9 @@
                         {% endif %}
                     </div>
              
-
+                    {% endfor %}
                 </div>
-            </div>
-
-                        {% if Post.image %}
-                            <img src="{{ Post.image.url }}" alt="Post Image">
-                        {% endif %}
-                    </div>
-                {% endfor %}
-
-            </div>
+           
         </body>
 
     </html>

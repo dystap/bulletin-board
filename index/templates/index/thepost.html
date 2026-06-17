@@ -172,8 +172,17 @@
                 border: 2rem;
                 border-color: rgb(255, 255, 255);;
                 color: rgb(71, 28, 28);
+                justify-content: flex-end ;
+                align-items: left;
                 
             }
+            .button-container{
+                display: flex;
+                justify-content: flex-start;
+                align-items: left;
+                background: transparent;
+            }
+            
         </style>
     </head>
     <body>
@@ -226,35 +235,53 @@
                             {% empty %}
                                 <p class="comment-container">No replies yet.</p>
                             {% endfor %}
-                        </div>
-                        <div class="form-container">
+                        
+
+                    <div class="form-container">
+
                             <form method="POST" action="{% url 'index:thepost' ThePost.id %}" class="formUI">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                            <button type="submit" class="submit-button">Submit Reply</button>
+                            
+                            
+                                <button type="submit" class="submit-button">Submit Reply</button>
                         </form>
+
+                    </div>
+
+                    </div>
+                        </div>
                     </div>
                         
                     </div>
                 {% empty %}
                 <div class="comment-container">
                     <p >No comments yet lol, make the first one!</p>
+                    </div>
+                {% endfor %}
+
+                <div class="comment-container">
 
                     <div class="form-container">
                         <form method="POST" action="{% url 'index:thepost' ThePost.id %}" class="formUI">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                            <button type="submit">Submit Reply</button>
+                            
+                            <button type="submit" class="submit-button">Submit Button</button>
                         </form>
+                           
 
                     </div>
 
                 </div>
                     
+
+               
                     
-                {% endfor %}
+                    
+                
             </div>
     </body>
 </html>

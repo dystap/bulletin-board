@@ -2,22 +2,75 @@
 
 <html>
     <head>
-        <title></title>
+        <title>Edit Profile</title>
+         <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+
         <style>
+            body{
+                 display: flex;
+                flex-direction: column;
+                 font-family: "Roboto Slab", serif;
+                font-optical-sizing: auto;
+                font-weight: 1rem;
+                background-color:  rgb(183, 59, 35);
+                
+               
+            }
             .form-control {
-                border-radius: 0.5em;
+                 border-radius: 0.5em;
                 padding: 0.5em;
                 width: 67%;
+                background-color: rgb(254, 209, 163);
+                margin: 1vw;
+            }
+
+            .formUI{
+                background-color: transparent;
+            }
+            .formUI div{
+                background-color: transparent;
+            }
+            .formUI label, .formUI select{
+                background-color: transparent;
+            }
+
+            .formUI input{
+                border-radius: 12px;
+            }
+
+            .title{
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                color: rgb(85, 25, 13);
+                 background-color:  rgb(254, 209, 163);
+                 margin: 1vw;
+                border: 1vw;
+                border-color: rgb(254, 209, 163);
+                border-style: solid;
+                border-radius: 10px;
+               
             }
 
         </style>
     </head>
     <body>
      {% block content %}
+     <h2 class="title">Edit Your Profile</h2>
         <div class="form-control">
-            <h2>Edit Your Profile</h2>
             
-            <form method="POST" enctype="multipart/form-data">
+            
+            <form method="POST" enctype="multipart/form-data" class="formUI">
                 {% csrf_token %}
                 
                 {{ form.as_div }}

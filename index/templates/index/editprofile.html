@@ -28,13 +28,18 @@
             .form-control {
                  border-radius: 0.5em;
                 padding: 0.5em;
-                width: 67%;
+               
                 background-color: rgb(254, 209, 163);
                 margin: 1vw;
             }
 
             .formUI{
                 background-color: transparent;
+                display: grid;
+                gap: 15px;
+                align-items: center;
+                grid-template-columns: 1fr;
+                max-width: 80vw;
             }
             .formUI div{
                 background-color: transparent;
@@ -61,6 +66,19 @@
                 border-radius: 10px;
                
             }
+            .button{
+                 background: rgb(238, 102, 75);
+                display: flex;
+                margin: auto;
+                margin-top: 10px;
+                padding: 0.5em;
+                border-radius: 5px;
+                border: 2rem;
+                border-color: rgb(255, 255, 255);;
+                color: rgb(71, 28, 28);
+                justify-content: flex-end ;
+                align-items: left;
+            }
 
         </style>
     </head>
@@ -75,7 +93,7 @@
                 
                 {{ form.as_div }}
                 
-                <button type="submit">Save Changes</button>
+                <button type="submit" class="button">Save Changes</button>
             </form>
         </div>
         {% endblock %}

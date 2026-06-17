@@ -275,7 +275,9 @@
                     <div class="PostsUI">
                         <h4> {{ Post.post_date }}</h4>
                          <div class="postuser">
+                            {% if Post.user.user_profile.pfp %}
                             <img src="{{ Post.user.user_profile.pfp.url }}" style="width: 50px; height: 50px">
+                            {% endif %}
                             <h3> By: {{ Post.user }}</h3>
                         </div>
                         <div class="titlepfp">

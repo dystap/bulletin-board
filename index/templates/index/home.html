@@ -161,9 +161,12 @@
 
                 <div class="text-container">
                 <a href="{% url 'index:editprofile' %}">
+
+                {% if user.user_profile.pfp %}
                 <img src="{{ user.user_profile.pfp.url }}" style="
                     width: 5vw;
                     height: 5vw;" >
+                {% endif %}
                 </a>
                 
                 <h1>Welcome back, {{ user.username }}!</h1>
@@ -196,7 +199,9 @@
                     <div class="PostsUI">
                         <h4> {{ Post.post_date }}</h4>
                          <div class="postuser">
+                            {% if Post.user.user_profile.pfp %}
                             <img src="{{ Post.user.user_profile.pfp.url }}" style="width: 50px; height: 50px">
+                            {% endif %}
                             <h3> By: {{ Post.user }}</h3>
                         </div>
                         <div class="titlepfp">

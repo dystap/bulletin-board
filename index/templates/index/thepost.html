@@ -188,8 +188,9 @@
     <body>
         <div class="post-container">
                 <div class="user">
-
+                    {% if Post.user.user_profile.pfp %}
                     <img src="{{ ThePost.user.user_profile.pfp.url }}" alt="Profile Picture" style="width: 40px; height: 40px;">
+                    {% endif %}
                     <p style="background: transparent;">{{ ThePost.user }} </p>
 
                 </div>

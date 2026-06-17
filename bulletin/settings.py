@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,10 +36,34 @@ if env_file.exists():
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = []
+PRODUCTION = env("PRODUCTION")
 
+ALLOWED_HOSTS = [host.strip() for host in env('ALLOWED_HOSTS').split(',') if host.strip()]
+
+if not PRODUCTION:
+    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]']
+
+
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000']
+
+if PRODUCTION:
+    if env('CSRF_TRUSTED_ORIGINS'):
+        CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in env('CSRF_TRUSTED_ORIGINS').split(",") if origin.strip()]
+    else:
+        CSRF_TRUSTED_ORIGINS = []
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+if PRODUCTION:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 

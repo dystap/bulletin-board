@@ -2,22 +2,63 @@
 
 <html>
     <head>
+         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
         <title>Login</title>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
         <style>
+            * {
+                background-color:  rgb(183, 59, 35);
+                
+            }
+            body {
+               
+                font-family: "Roboto Slab", serif;
+                font-optical-sizing: auto;
+                font-weight: 1rem;
+                
+            }
+
+
             .form-control {
                 border-radius: 0.5em;
                 padding: 0.5em;
-                width: 67%;
+                background: transparent;
             }
+
+            .title{
+                background-color:  rgb(254, 209, 163);
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                display: flex;
+                flex-direction: row;
+                gap: 10px; 
+            }
+
+            .form-container{
+                background-color:  rgb(254, 209, 163);
+            }
+            
 
         </style>
     </head>
     <body>
-        <!-- {% if user.is_authenticated %}
-        test
-        {% else %} -->
-        <h1>Login</h1>
-        <form action="{% url 'index:login' %}" method="POST">
+        <h1 class="title">Login</h1>
+
+        <div class="form-container">
+
+            <form action="{% url 'index:login' %}" method="POST" class="form-control">
             {% csrf_token %}
 
             {{ form.as_div }}
@@ -25,7 +66,9 @@
             <button type="submit">Post</button>
 
         </form>
-        <!-- {% endif %} -->
+
+        </div>
+        
         
 
     </body>

@@ -149,16 +149,52 @@
                 background: transparent;
                 gap: 1rem;
             }
+
+            .login-container{
+                display: flex;
+                background-color: rgb(254, 209, 163);
+                 border-radius: 5px;
+                 margin-top: 10 vw;
+                padding: 0.5em;
+                 margin: auto;
+                 border: 2rem;
+                 max-width: 3vw;
+
+
+            }
+            .login-button{
+                  display: flex;
+                margin: auto;
+                
+                background-color: rgb(254, 209, 163);
+               
+                border-color: rgb(255, 255, 255);
+                color: white;
+            }
+            .title-button{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .title-button h1    {
+                display: inline-flex;
+                flex-direction: column;
+                margin: 0;
+            }
     </style>
 
       </head>
         <body>
 
-            {% if user.is_authenticated %}
+           
             
             <div class="title">
                 <img src="{% static 'index/img/bulletinlogo.png'  %}">
 
+
+                 {% if user.is_authenticated %}
                 <div class="text-container">
                 <a href="{% url 'index:editprofile' %}">
 
@@ -172,19 +208,24 @@
                 <h1>Welcome back, {{ user.username }}!</h1>
                 <p>Great to see you again.</p>
     
+                </div class="title-button">
+                 {% else %}
+                <h1>Welcome to Bulletin Board!</h1>
+
+                 <div class="login-container">
+                    <a href="{% url 'index:login' %}" > Login here!</a>
                 </div>
                 
-
+            {% endif %}
             </div>
             
             
 
                 
-                 {% else %}
-                <h1>Welcome to Bulletin Board!</h1>
+                
+                
 
-                <a href="{% url 'index:login' %}"> Login here!</a>
-            {% endif %}
+               
             
           
 

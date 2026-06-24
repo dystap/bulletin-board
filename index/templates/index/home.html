@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width", initial-scale="1.0"/>
-        <title>Introduction</title>
+        <title>Bulletin Board!</title>
 
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,11 @@
                 font-weight: 1rem;
                 
             }
+            html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            }
 
 
             body > * {
@@ -44,25 +49,50 @@
                 display: flex;
                 flex-direction: row;
                 gap: 10px; 
+                
             }
 
             .text-container{
                 display: flex;
                 flex-direction: column;
-                align-items: flex-end;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
                 gap: 0.5 vw;
                 background: transparent;
+
             }
             
-            .title h1, .title p, .title a{
+            .title h1 {
+                flex-direction: column;
                 background: transparent;
                 margin: 0;
                 color: #522a21;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                margin-top: clamp(2% ,8%, 10%);
+                margin-bottom: clamp(2%, 8%, 10%);
             }
-            .title img{
+
+            .title p {
+                flex-direction: column;
                 background: transparent;
-                width: clamp(50vw,50%,20%);
-                height: clamp(50vw,50%,20%);
+                margin: 0;
+                margin-top: clamp(4%,12%,16%);
+                margin-bottom: clamp(4%,12%,16%);
+                color: #522a21;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .title img{
+                margin-top: clamp(4rem,6rem,8rem);
+                margin-bottom: clamp(4rem,6rem,8em);
+                background: transparent;
+                width: clamp(20%,40%,80%);
+                height: clamp(20%,40%,80%);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -152,13 +182,16 @@
 
             .login-container{
                 display: flex;
-                background-color: rgb(254, 209, 163);
+                color: rgb(254, 209, 163);
+                background-color: rgb(92, 38, 16);
                  border-radius: 5px;
                  margin-top: 10 vw;
                 padding: 0.5em;
+                width: auto;
                  margin: auto;
                  border: 2rem;
                  max-width: 3vw;
+                 min-width: max-content;
 
 
             }
@@ -166,61 +199,201 @@
                   display: flex;
                 margin: auto;
                 
-                background-color: rgb(254, 209, 163);
+                background-color: rgb(92, 38, 16);
                
                 border-color: rgb(255, 255, 255);
                 color: white;
             }
+            .a-button{
+                background-color: rgb(92, 38, 16);
+                width: 100%;
+                color: rgb(207, 163, 118);
+            }
+
             .title-button{
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 flex-direction: column;
+                background-color: transparent;
             }
 
             .title-button h1    {
                 display: inline-flex;
                 flex-direction: column;
                 margin: 0;
+                background-color:transparent;
             }
+
+             .topic-filter-bar{
+                display: flex;
+                margin: auto;
+                background: rgb(138, 41, 22);
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                margin-bottom: 1vw;
+                
+            }
+
+            .topic-filter-bar strong{
+                padding: 20px;
+                border-radius: 8px;
+                font-family: "Fjalla One", sans-serif;
+                font-weight: 400;
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+                font-style: normal;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                background-color: transparent;
+            }
+
+            .topic-filter-bar a{
+                width: 100%;
+            }
+
+            .topic-filter{
+                display: flex;
+                background: transparent;
+
+            }
+
+            .topic-filter a{
+                display: flex;
+                background: rgb(223, 182, 140);
+                border-radius: 10%;
+                margin: 1vw;
+                width: 110px;
+                height: 45px;
+                border: 1vw;
+                border-color: rgb(223, 182, 140);
+                font-family: "Fjalla One", sans-serif;
+                padding: 10px 20px;
+                font-size: 23px;
+                font-style: normal;
+                color: black;
+                text-align: center;
+                justify-content: center;
+
+            }
+
+              .navbar{
+                background-color: rgba(254, 209, 163, 0.5);
+                color: rgb(71, 28, 28);
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+                justify-content:flex-start;
+                gap: 2vw;
+            }
+
+            .navbar img{
+                width: 6vw;
+                height: 4vw;
+                background-color: transparent;
+            }
+
+            .navbar p{
+                background-color: transparent;
+                color: #522a21;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-family: "Fjalla One", sans-serif;  
+                font-size: clamp(1rem, 2vw, 4rem);
+                font-style: normal;
+                margin: 0   ;
+                line-height: -100px;
+            }
+            .navbar a{
+                background-color: transparent;
+            }
+
+
     </style>
 
       </head>
         <body>
 
+          
+        <div class="navbar">
+            <a href="{% url 'index:home'%}">
+                <img src="{% static 'index/img/bulletinlogo.png'  %}">
+            </a>
+            
+            <a href="{%url 'index:post_list'%}">
+                <p>Post List</p>
+            </a>
+
+            <a href="{% url 'index:editprofile' %}">
+                <p>Profile</p>
+            </a>
+
+            <a href="{% url 'index:post' %}">
+                <p>Post Something</p>
+            </a>
+        </div>
+
            
             
             <div class="title">
+                
+                
                 <img src="{% static 'index/img/bulletinlogo.png'  %}">
+                
+                
 
-
+                <div class="text-container"></div>
                  {% if user.is_authenticated %}
-                <div class="text-container">
-                <a href="{% url 'index:editprofile' %}">
-
-                {% if user.user_profile.pfp %}
-                <img src="{{ user.user_profile.pfp.url }}" style="
-                    width: 5vw;
-                    height: 5vw;" >
-                {% endif %}
-                </a>
+                    
+                    
+                    <h1>Welcome back, {{ user.username }}!</h1>
+                    <p>Great to see you again.</p>
                 
-                <h1>Welcome back, {{ user.username }}!</h1>
-                <p>Great to see you again.</p>
-    
-                </div class="title-button">
-                 {% else %}
-                <h1>Welcome to Bulletin Board!</h1>
 
-                 <div class="login-container">
-                    <a href="{% url 'index:login' %}" > Login here!</a>
+                    <a href="{% url 'index:editprofile' %}" style="background-color: transparent;">                 
+                    {% if user.user_profile.pfp %}
+                    <img src="{{ user.user_profile.pfp.url }}" style="
+                        width: 5vw;
+                        height: 5vw;" >
+                    {% else %}
+                    <img src="{% static 'index/img/blank-pfp.jpg'  %}">
+                    {% endif %}
+                    </a>
+
+                    
+                        {% else %}
+                    <div class="title-button">
+
+                            <h1>Welcome to Bulletin Board!</h1>
+
+                            <div class="login-container">
+                                <a href="{% url 'index:login' %}" class="a-button" > Login here!</a>
+                            </div>
+                    </div>
+                    
+                 {% endif %}
                 </div>
-                
-            {% endif %}
             </div>
             
             
+            
+           <div class="topic-filter-bar">
+            <strong>Filter by Topic:</strong>
+                <div class="topic-filter">
 
+                    <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">All Posts</a>
+                    {% for topic in all_topics %}
+                        <a href="{% url 'index:post_list' %}?topic={{ topic.id }}" style="margin-right: 15px;">
+                            {{ topic.topic }}
+                        </a>
+                    {% endfor %}
+                </div>
+                
+            </div>
                 
                 
                 
@@ -231,9 +404,7 @@
 
 
             <div>
-                 <a href="{% url 'index:post_list' %}" style="margin-right: 15px;">
-                    <p style="
-                    color: rgb(254, 209, 163);">New Posts</p></a>
+          
 
                 <div class="Posts">
                 {% for Post in posts %}

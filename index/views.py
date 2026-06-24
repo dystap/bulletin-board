@@ -18,10 +18,17 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     posts = Post.objects.all().order_by('post_date').select_related('user', 'user__user_profile',)
 
+    selected_topic = request.GET.get('topic')
+    if selected_topic:
+        posts = posts.filter(topic_id=selected_topic)
 
-    return render(request, "index/home.html", {
-       "posts": posts
-    })
+    all_topics = Topic.objects.all()
+    context = { 
+        "posts" : posts,
+        "all_topics" : all_topics,
+        "selected_topic": selected_topic
+    }
+    return render(request, "index/home.html", context)
 
 def post_list(request):
     posts = Post.objects.all().order_by('post_date').select_related('user', 'user__user_profile',)
